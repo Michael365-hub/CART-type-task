@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michael's Drink Store 🍹</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5); /* cool blue-teal gradient */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .drink-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 80%;
+      max-width: 750px;
+    }
+
+    .drink {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .drink:hover {
+      transform: scale(1.05);
+    }
+
+    .drink img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .drink h2 {
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .drink p {
+      margin: 5px 0;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      background: #0099cc;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #0077aa;
+    }
+
+    .count {
+      font-size: 18px;
+      width: 30px;
+      text-align: center;
+    }
+
+    .total-box {
+      background: rgba(255, 255, 255, 0.95);
+      margin-top: 30px;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      font-size: 18px;
+      color: #333;
+    }
+
+    .footer {
+      margin-top: 25px;
+      color: white;
+      font-weight: 600;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1>🥤 Welcome to Michael's Drink Store</h1>
+
+  <div class="drink-container">
+    <div class="drink" data-price="700">
+      <img src="yougurt.webp" alt="Yoghurt">
+      <h2>Yoghurt</h2>
+      <p>₦700</p>
+      <div class="controls">
+        <button class="minus">-</button>
+        <span class="count">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+
+    <div class="drink" data-price="500">
+      <img src="cola.webp" alt="Cola">
+      <h2>Cola</h2>
+      <p>₦500</p>
+      <div class="controls">
+        <button class="minus">-</button>
+        <span class="count">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+
+    <div class="drink" data-price="500">
+      <img src="fanta.webp" alt="Fanta">
+      <h2>Fanta</h2>
+      <p>₦500</p>
+      <div class="controls">
+        <button class="minus">-</button>
+        <span class="count">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+
+    <div class="drink" data-price="900">
+      <img src="maltina.webp" alt="Maltina">
+      <h2>Maltina</h2>
+      <p>₦900</p>
+      <div class="controls">
+        <button class="minus">-</button>
+        <span class="count">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+
+    <div class="drink" data-price="1200">
+      <img src="chivita.webp" alt="Chivita">
+      <h2>Chivita</h2>
+      <p>₦1200</p>
+      <div class="controls">
+        <button class="minus">-</button>
+        <span class="count">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+
+    <div class="drink" data-price="1500">
+      <img src="savanna.jpg" alt="Savanna">
+      <h2>Savanna</h2>
+      <p>₦1500</p>
+      <div class="controls">
+        <button class="minus">-</button>
+        <span class="count">0</span>
+        <button class="plus">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="total-box">
+    🛒 Total: <strong>₦<span id="total">0</span></strong>
+  </div>
+
+  <div class="footer">
+    ✨ Thanks for your patronage! ✨
+  </div>
+
+  <script>
+    const drinks = document.querySelectorAll('.drink');
+    const totalDisplay = document.getElementById('total');
+    let total = 0;
+
+    drinks.forEach(drink => {
+      const plus = drink.querySelector('.plus');
+      const minus = drink.querySelector('.minus');
+      const countDisplay = drink.querySelector('.count');
+      const price = parseInt(drink.dataset.price);
+      let count = 0;
+
+      plus.addEventListener('click', () => {
+        count++;
+        countDisplay.textContent = count;
+        total += price;
+        totalDisplay.textContent = total;
+      });
+
+      minus.addEventListener('click', () => {
+        if (count > 0) {
+          count--;
+          countDisplay.textContent = count;
+          total -= price;
+          totalDisplay.textContent = total;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
